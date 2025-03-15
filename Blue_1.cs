@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace Lab_7
+namespace Lab_6
 {
     public class Blue_1
     {
@@ -51,13 +51,13 @@ namespace Lab_7
             }
         }
 
-        public class HumanResponse : Response 
+        public class HumanResponse : Response
         {
             private string _surname;
 
             public string Surname => _surname;
 
-            public HumanResponse(string name, string surname) : base(name) 
+            public HumanResponse(string name, string surname) : base(name)
             {
                 _surname = surname;
             }
@@ -69,7 +69,7 @@ namespace Lab_7
                 _votes = 0;
                 foreach (Response response in responses)
                 {
-                    if (response is HumanResponse && response.Name == this.Name)
+                    if (response is HumanResponse && response.Name == Name)
                     {
                         _votes++;
                     }
@@ -79,7 +79,7 @@ namespace Lab_7
 
             public override void Print()
             {
-                Console.WriteLine($"{this.Name} {this.Surname} {this.Votes}");
+                Console.WriteLine($"{Name} {Surname} {Votes}");
             }
         }
 

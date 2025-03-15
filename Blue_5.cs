@@ -4,14 +4,15 @@ using System.Linq;
 using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
-using static Lab_7.Blue_5;
+using static Lab_6.Blue_5;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Lab_7
+namespace Lab_6
 {
     public class Blue_5
     {
-        public class Sportsman { 
+        public class Sportsman
+        {
             private string _name;
             private string _surname;
             private int _place;
@@ -22,30 +23,35 @@ namespace Lab_7
             public string Surname => _surname;
             public int Place => _place;
 
-            public Sportsman(string name, string surname) { 
+            public Sportsman(string name, string surname)
+            {
                 _name = name;
                 _surname = surname;
                 _place = 0;
                 _setted_place = false;
             }
 
-            public void SetPlace(int place) {
+            public void SetPlace(int place)
+            {
                 if (_setted_place == false)
                 {
                     _place = place;
                     _setted_place = true;
                 }
-                else {
+                else
+                {
                     Console.WriteLine($"Этот спортсмен уже занял {_place} место.");
                 }
             }
 
-            public void Print() {
+            public void Print()
+            {
                 Console.WriteLine($"{_name} {_surname} {_place}");
             }
         }
 
-        public abstract class Team { 
+        public abstract class Team
+        {
             private string _name;
             private Sportsman[] _sportsmen;
 
@@ -54,11 +60,14 @@ namespace Lab_7
             public string Name => _name;
             public Sportsman[] Sportsmen => _sportsmen;
 
-            public int SummaryScore {
-                get {
+            public int SummaryScore
+            {
+                get
+                {
                     if (_sportsmen == null) { return 0; }
                     int sum = 0;
-                    foreach (Sportsman sportsman in _sportsmen) {
+                    foreach (Sportsman sportsman in _sportsmen)
+                    {
                         if (5 - sportsman.Place + 1 > 0 && sportsman.Place != 0)
                         {
                             sum += 5 - sportsman.Place + 1;
@@ -68,11 +77,14 @@ namespace Lab_7
                 }
             }
 
-            public int TopPlace {
-                get {
+            public int TopPlace
+            {
+                get
+                {
                     if (_sportsmen == null) { return 0; }
                     int maxi = 18;
-                    foreach (Sportsman sportsman in _sportsmen) {
+                    foreach (Sportsman sportsman in _sportsmen)
+                    {
                         if (sportsman.Place != 0)
                         {
                             maxi = Math.Min(maxi, sportsman.Place);
@@ -82,20 +94,24 @@ namespace Lab_7
                 }
             }
 
-            public Team(string name) {
+            public Team(string name)
+            {
                 _name = name;
                 _sportsmen = new Sportsman[6];
                 _added_sportsmen = 0;
             }
 
-            public void Add(Sportsman sportsman) {
+            public void Add(Sportsman sportsman)
+            {
                 if (_sportsmen == null) return;
                 _sportsmen[_added_sportsmen++] = sportsman;
             }
 
-            public void Add(Sportsman[] new_sportsmen) { 
+            public void Add(Sportsman[] new_sportsmen)
+            {
                 if (_sportsmen == null) return;
-                for (int i = 0; i < new_sportsmen.Length; i++) {
+                for (int i = 0; i < new_sportsmen.Length; i++)
+                {
                     _sportsmen[_added_sportsmen++] = new_sportsmen[i];
                 }
             }
@@ -145,36 +161,43 @@ namespace Lab_7
 
             protected abstract double GetTeamStrength();
 
-            private static Team[] SortByStrength(Team[] teams) {
+            private static Team[] SortByStrength(Team[] teams)
+            {
                 var sortedTeams = teams.OrderByDescending(t => t.GetTeamStrength()).ToArray();
                 // teams = sortedTeams;
                 return sortedTeams;
             }
 
-            public static Team GetChampion(Team[] teams) {
+            public static Team GetChampion(Team[] teams)
+            {
                 if (teams == null) return null;
                 SortByStrength(teams);
                 if (teams as ManTeam[] != null)
                 {
                     Console.WriteLine($"Чемпионом среди мужских команд является {teams[0].Name}");
                 }
-                else {
+                else
+                {
                     Console.WriteLine($"Чемпионом среди женских команд является {teams[0].Name}");
                 }
                 return teams[0];
             }
 
-            public void Print() {
+            public void Print()
+            {
                 Console.WriteLine($"{_name} {TopPlace} {SummaryScore}");
             }
         }
 
-        public class ManTeam : Team { 
+        public class ManTeam : Team
+        {
             public ManTeam(string name) : base(name) { }
 
-            protected override double GetTeamStrength() {
+            protected override double GetTeamStrength()
+            {
                 double avg = 0; double n = 0; double s = 0;
-                foreach (Sportsman sportsman in Sportsmen) {
+                foreach (Sportsman sportsman in Sportsmen)
+                {
                     s += sportsman.Place;
                     n++;
                 }
@@ -182,11 +205,13 @@ namespace Lab_7
                 return 100.0 / avg;
             }
         }
-        
-        public class WomanTeam : Team {
+
+        public class WomanTeam : Team
+        {
             public WomanTeam(string name) : base(name) { }
 
-            protected override double GetTeamStrength() {
+            protected override double GetTeamStrength()
+            {
                 double s = 0; double n = 0; double p = 1;
                 foreach (Sportsman sportsman in Sportsmen)
                 {

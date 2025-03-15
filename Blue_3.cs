@@ -4,15 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_7
+namespace Lab_6
 {
     public class Blue_3
     {
-        public class Participant {
+        public class Participant
+        {
             private string _name;
             private string _surname;
             protected int[] _penalties;
-            
+
             protected bool _is_expelled;
 
             public string Name => _name;
@@ -23,13 +24,15 @@ namespace Lab_7
                 {
                     if (_penalties == null) return null;
                     int[] newArr = new int[_penalties.Length];
-                    Array.Copy(_penalties, newArr, _penalties.Length); 
+                    Array.Copy(_penalties, newArr, _penalties.Length);
                     return newArr;
                 }
             }
 
-            public int Total {
-                get {
+            public int Total
+            {
+                get
+                {
                     if (_penalties == null || _penalties.Length == 0) { return 0; }
                     return _penalties.Sum();
                 }
@@ -37,16 +40,19 @@ namespace Lab_7
 
             public virtual bool IsExpelled => _is_expelled;
 
-            public Participant(string name, string surname) { 
+            public Participant(string name, string surname)
+            {
                 _name = name;
                 _surname = surname;
                 _penalties = new int[0];
                 _is_expelled = false;
             }
 
-            public virtual void PlayMatch(int time) {
+            public virtual void PlayMatch(int time)
+            {
                 if (time < 0) { Console.WriteLine("Введите корректное время"); }
-                else {
+                else
+                {
                     if (_penalties == null) return;
                     if (time >= 10) { _is_expelled = true; }
                     Array.Resize(ref _penalties, _penalties.Length + 1);
@@ -54,7 +60,8 @@ namespace Lab_7
                 }
             }
 
-            public static void Sort(Participant[] participants) {
+            public static void Sort(Participant[] participants)
+            {
                 if (participants == null) { return; }
                 for (int i = 0; i < participants.Length; i++)
                 {
@@ -70,7 +77,8 @@ namespace Lab_7
                 }
             }
 
-            public void Print() {
+            public void Print()
+            {
                 Console.WriteLine($"{_name} {_surname} {Total} {IsExpelled}");
             }
         }
@@ -78,7 +86,8 @@ namespace Lab_7
         public class BasketballPlayer : Participant
         {
             private double _mathches_with_5_fouls;
-            public BasketballPlayer(string name, string surname) : base(name, surname) {
+            public BasketballPlayer(string name, string surname) : base(name, surname)
+            {
                 _mathches_with_5_fouls = 0;
             }
 
@@ -93,7 +102,7 @@ namespace Lab_7
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = fouls;
                     if (fouls == 5) { _mathches_with_5_fouls++; }
-                    if ((_penalties.Length / _mathches_with_5_fouls * 100 >= 10) || (this.Total / _penalties.Length == 2)) { _is_expelled = true; }
+                    if (_penalties.Length / _mathches_with_5_fouls * 100 >= 10 || Total / _penalties.Length == 2) { _is_expelled = true; }
                 }
             }
         }
@@ -102,7 +111,8 @@ namespace Lab_7
         {
             private static int _totalPlayers = 0;
             private static double _allPlayersPenalties;
-            public HockeyPlayer(string name, string surname) : base(name, surname) { 
+            public HockeyPlayer(string name, string surname) : base(name, surname)
+            {
                 _allPlayersPenalties = 0;
                 _totalPlayers++;
             }
@@ -118,7 +128,7 @@ namespace Lab_7
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = time;
                     _allPlayersPenalties += time;
-                    if ((time >= 10) || (this.Total / (_allPlayersPenalties / _totalPlayers) > 0.1)) { _is_expelled = true; }
+                    if (time >= 10 || Total / (_allPlayersPenalties / _totalPlayers) > 0.1) { _is_expelled = true; }
                 }
             }
 
