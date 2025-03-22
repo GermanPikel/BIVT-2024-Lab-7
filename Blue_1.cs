@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
-using System.IO.Pipes;
 using System.Linq;
-using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
-using System.Xml.Linq;
+using static Lab_7.Blue_1;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_1
     {
@@ -69,9 +66,12 @@ namespace Lab_6
                 _votes = 0;
                 foreach (Response response in responses)
                 {
-                    if (response is HumanResponse && response.Name == Name)
+                    if (response is HumanResponse hResponse)
                     {
-                        _votes++;
+                        if (hResponse.Name == Name && hResponse.Surname == Surname)
+                        {
+                            _votes++;
+                        }
                     }
                 }
                 return _votes;

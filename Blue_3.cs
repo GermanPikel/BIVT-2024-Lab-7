@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_3
     {
@@ -63,18 +63,8 @@ namespace Lab_6
             public static void Sort(Participant[] participants)
             {
                 if (participants == null) { return; }
-                for (int i = 0; i < participants.Length; i++)
-                {
-                    for (int j = i; j < participants.Length; j++)
-                    {
-                        if (participants[i].Total > participants[j].Total)
-                        {
-                            Participant tmp = participants[i];
-                            participants[i] = participants[j];
-                            participants[j] = tmp;
-                        }
-                    }
-                }
+                var newArr = participants.OrderBy(p => p.Total).ToArray();
+                participants = newArr;
             }
 
             public void Print()
@@ -102,7 +92,7 @@ namespace Lab_6
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = fouls;
                     if (fouls == 5) { _mathches_with_5_fouls++; }
-                    if (_penalties.Length / _mathches_with_5_fouls * 100 >= 10 || Total / _penalties.Length == 2) { _is_expelled = true; }
+                    if (_penalties.Length / _mathches_with_5_fouls * 100 > 10 || Total / _penalties.Length == 2) { _is_expelled = true; }
                 }
             }
         }
@@ -134,5 +124,4 @@ namespace Lab_6
 
         }
     }
-
 }

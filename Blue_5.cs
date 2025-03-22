@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Security.Authentication;
 using System.Text;
 using System.Threading.Tasks;
-using static Lab_6.Blue_5;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_5
     {

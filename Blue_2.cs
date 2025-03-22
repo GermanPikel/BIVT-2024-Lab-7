@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
 using System.Linq;
-using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_2
     {
@@ -22,10 +20,11 @@ namespace Lab_6
             {
                 get
                 {
-                    if (_participants == null) { return null; }
-                    Participant[] copyParticipants = new Participant[_participants.Length];
-                    Array.Copy(_participants, copyParticipants, _participants.Length);
-                    return copyParticipants;
+                    //if (_participants == null) { return null; }
+                    //Participant[] copyParticipants = new Participant[_participants.Length];
+                    //Array.Copy(_participants, copyParticipants, _participants.Length);
+                    //return copyParticipants;
+                    return _participants;
                 }
             }
 
@@ -172,18 +171,8 @@ namespace Lab_6
             public static void Sort(Participant[] array)
             {
                 if (array == null) { return; }
-                for (int i = 0; i < array.Length; i++)
-                {
-                    for (int j = i; j < array.Length; j++)
-                    {
-                        if (array[i].TotalScore < array[j].TotalScore)
-                        {
-                            Participant tmp = array[i];
-                            array[i] = array[j];
-                            array[j] = tmp;
-                        }
-                    }
-                }
+                var newArr = array.OrderByDescending(p => p.TotalScore).ToArray();
+                array = newArr;
             }
 
             public void Print()

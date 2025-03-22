@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using static Lab_6.Blue_4;
-using static Lab_6.Blue_5;
-using static System.Formats.Asn1.AsnWriter;
 
-namespace Lab_6
+namespace Lab_7
 {
     public class Blue_4
     {
@@ -126,31 +123,9 @@ namespace Lab_6
 
             public void Add(Team[] teams_to_add)
             {
-                if (teams_to_add as ManTeam[] != null)
+                foreach (var team in teams_to_add)
                 {
-                    if (_manTeams_added >= 12)
-                    {
-                        return;
-                    }
-                    if (_manTeams == null || teams_to_add == null) return;
-                    for (int i = 0; i < teams_to_add.Length; i++)
-                    {
-                        if (_manTeams_added >= 12) { break; }
-                        _manTeams[_manTeams_added++] = teams_to_add[i];
-                    }
-                }
-                if (teams_to_add as WomanTeam[] != null)
-                {
-                    if (_womanTeams_added >= 12)
-                    {
-                        return;
-                    }
-                    if (_womanTeams == null || teams_to_add == null) return;
-                    for (int i = 0; i < teams_to_add.Length; i++)
-                    {
-                        if (_womanTeams_added >= 12) { break; }
-                        _womanTeams[_womanTeams_added++] = teams_to_add[i];
-                    }
+                    Add(team);
                 }
             }
 
@@ -158,7 +133,7 @@ namespace Lab_6
             {
                 if (t == null) { return; }
                 Team[] sorted_teams = null;
-                sorted_teams = t.OrderByDescending(t => t.TotalScore).ToArray();
+                sorted_teams = t.OrderByDescending(team => team.TotalScore).ToArray();
                 t = sorted_teams;
             }
 
