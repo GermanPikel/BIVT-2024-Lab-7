@@ -80,8 +80,8 @@ namespace Lab_7
         public class Group
         {
             private string _name;
-            private Team[] _manTeams;
-            private Team[] _womanTeams;
+            private ManTeam[] _manTeams;
+            private WomanTeam[] _womanTeams;
 
             private int _manTeams_added;
             private int _womanTeams_added;
@@ -93,31 +93,29 @@ namespace Lab_7
             public Group(string name)
             {
                 _name = name;
-                _manTeams = new Team[12];
-                _womanTeams = new Team[12];
+                _manTeams = new ManTeam[12];
+                _womanTeams = new WomanTeam[12];
                 _manTeams_added = 0;
                 _womanTeams_added = 0;
             }
 
             public void Add(Team team_to_add)
             {
-                if (team_to_add as ManTeam != null)
+                if (team_to_add is ManTeam mt)
                 {
-                    if (_manTeams_added >= 12)
+                    if (_manTeams_added >= 12 || _manTeams == null)
                     {
                         return;
                     }
-                    if (_manTeams == null) return;
-                    _manTeams[_manTeams_added++] = team_to_add;
+                    _manTeams[_manTeams_added++] = mt;
                 }
-                else if (team_to_add as WomanTeam != null)
+                else if (team_to_add is WomanTeam wt)
                 {
-                    if (_womanTeams_added >= 12)
+                    if (_womanTeams_added >= 12 || _womanTeams == null)
                     {
                         return;
                     }
-                    if (_womanTeams == null) return;
-                    _womanTeams[_womanTeams_added++] = team_to_add;
+                    _womanTeams[_womanTeams_added++] = wt;
                 }
             }
 
@@ -180,12 +178,12 @@ namespace Lab_7
             public void Print()
             {
                 Console.WriteLine($"{_name} ");
-                foreach (Team team in _manTeams)
+                foreach (var team in _manTeams)
                 {
                     team.Print();
                 }
                 Console.WriteLine();
-                foreach (Team team in _womanTeams)
+                foreach (var team in _womanTeams)
                 {
                     team.Print();
                 }

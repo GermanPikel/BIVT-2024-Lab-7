@@ -100,16 +100,17 @@ namespace Lab_7
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null) return;
+                if (_sportsmen == null || _added_sportsmen >= 6 || sportsman == null) return;
                 _sportsmen[_added_sportsmen++] = sportsman;
             }
 
             public void Add(Sportsman[] new_sportsmen)
             {
-                if (_sportsmen == null) return;
+                if (_sportsmen == null || _added_sportsmen >= 6 || new_sportsmen == null) return;
                 for (int i = 0; i < new_sportsmen.Length; i++)
                 {
                     _sportsmen[_added_sportsmen++] = new_sportsmen[i];
+                    if (_added_sportsmen >= 6) { return; }
                 }
             }
 
@@ -160,6 +161,7 @@ namespace Lab_7
 
             private static Team[] SortByStrength(Team[] teams)
             {
+                if (teams == null) return null;
                 var sortedTeams = teams.OrderByDescending(t => t.GetTeamStrength()).ToArray();
                 // teams = sortedTeams;
                 return sortedTeams;
@@ -168,7 +170,7 @@ namespace Lab_7
             public static Team GetChampion(Team[] teams)
             {
                 if (teams == null) return null;
-                SortByStrength(teams);
+                teams = SortByStrength(teams);
                 if (teams as ManTeam[] != null)
                 {
                     Console.WriteLine($"Чемпионом среди мужских команд является {teams[0].Name}");

@@ -37,7 +37,7 @@ namespace Lab_7
             {
                 _name = name;
                 _bank = bank;
-                Participant[] participants = new Participant[0];
+                _participants = new Participant[0];
             }
 
             public void Add(Participant participant)
@@ -49,11 +49,10 @@ namespace Lab_7
 
             public void Add(Participant[] participants)
             {
-                if (participants == null) { return; }
+                if (participants == null || _participants == null) { return; }
                 foreach (Participant p in participants)
                 {
-                    Array.Resize(ref _participants, _participants.Length + 1);
-                    _participants[_participants.Length - 1] = p;
+                    Add(p);
                 }
             }
         }
@@ -107,7 +106,7 @@ namespace Lab_7
             private string _surname;
             private int[,] _marks;
 
-            private int _estimated_jumps;  // вспомогательное поле, не указанное в задании
+            private int _estimated_jumps;
 
             public Participant(string name, string surname)
             {
@@ -170,9 +169,18 @@ namespace Lab_7
 
             public static void Sort(Participant[] array)
             {
-                if (array == null) { return; }
-                var newArr = array.OrderByDescending(p => p.TotalScore).ToArray();
-                array = newArr;
+                if (array == null || array.Length == 0) return;
+                for (int i = 1; i < array.Length; i++)
+                {
+                    Participant curr_p = array[i];
+                    int j = i - 1;
+                    while (j >= 0 && array[j].TotalScore < curr_p.TotalScore)
+                    {
+                        array[j + 1] = array[j];
+                        j--;
+                    }
+                    array[j + 1] = curr_p;
+                }
             }
 
             public void Print()

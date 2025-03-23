@@ -54,7 +54,6 @@ namespace Lab_7
                 else
                 {
                     if (_penalties == null) return;
-                    if (time >= 10) { _is_expelled = true; }
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = time;
                 }
@@ -63,8 +62,17 @@ namespace Lab_7
             public static void Sort(Participant[] participants)
             {
                 if (participants == null) { return; }
-                var newArr = participants.OrderBy(p => p.Total).ToArray();
-                participants = newArr;
+                for (int i = 1; i < participants.Length; i++)
+                {
+                    Participant curr_p = participants[i];
+                    int j = i - 1;
+                    while (j >= 0 && participants[j].Total > curr_p.Total)
+                    {
+                        participants[j + 1] = participants[j];
+                        j--;
+                    }
+                    participants[j + 1] = curr_p;
+                }
             }
 
             public void Print()
@@ -92,7 +100,7 @@ namespace Lab_7
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = fouls;
                     if (fouls == 5) { _mathches_with_5_fouls++; }
-                    if (_penalties.Length / _mathches_with_5_fouls * 100 > 10 || Total / _penalties.Length == 2) { _is_expelled = true; }
+                    if ((_mathches_with_5_fouls / _penalties.Length > 0.1) || (Total / _penalties.Length >= 2)) { _is_expelled = true; }
                 }
             }
         }
@@ -118,7 +126,7 @@ namespace Lab_7
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = time;
                     _allPlayersPenalties += time;
-                    if (time >= 10 || Total / (_allPlayersPenalties / _totalPlayers) > 0.1) { _is_expelled = true; }
+                    if (time >= 10 || (Total / (_allPlayersPenalties / _totalPlayers) > 0.1)) { _is_expelled = true; }
                 }
             }
 
