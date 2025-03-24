@@ -93,14 +93,14 @@ namespace Lab_7
 
             public override void PlayMatch(int fouls)
             {
-                if (fouls < 0) { Console.WriteLine("Введите корректное количество фолов"); }
+                if (fouls < 0 || fouls > 5) { Console.WriteLine("Введите корректное количество фолов"); }
                 else
                 {
                     if (_penalties == null) return;
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = fouls;
                     if (fouls == 5) { _mathches_with_5_fouls++; }
-                    if ((_mathches_with_5_fouls / _penalties.Length > 0.1) || (Total / _penalties.Length >= 2)) { _is_expelled = true; }
+                    if (((_mathches_with_5_fouls / _penalties.Length) > 0.1) || ((Total / 2.0) > _penalties.Length)) { _is_expelled = true; }
                 }
             }
         }
@@ -126,6 +126,7 @@ namespace Lab_7
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = time;
                     _allPlayersPenalties += time;
+                    if (_totalPlayers == 0) _is_expelled = false;
                     if (time >= 10 || (Total / (_allPlayersPenalties / _totalPlayers) > 0.1)) { _is_expelled = true; }
                 }
             }

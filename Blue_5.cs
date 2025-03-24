@@ -61,13 +61,14 @@ namespace Lab_7
             {
                 get
                 {
-                    if (_sportsmen == null) { return 0; }
+                    if (_sportsmen == null || _sportsmen.Length == 0) { return 0; }
                     int sum = 0;
                     foreach (Sportsman sportsman in _sportsmen)
-                    {
-                        if (5 - sportsman.Place + 1 > 0 && sportsman.Place != 0)
-                        {
-                            sum += 5 - sportsman.Place + 1;
+                    {   if (sportsman != null) {
+                            if (5 - sportsman.Place + 1 > 0 && sportsman.Place != 0)
+                            {
+                                sum += 5 - sportsman.Place + 1;
+                            }
                         }
                     }
                     return sum;
@@ -100,7 +101,8 @@ namespace Lab_7
 
             public void Add(Sportsman sportsman)
             {
-                if (_sportsmen == null || _added_sportsmen >= 6 || sportsman == null) return;
+                if (_sportsmen == null || _added_sportsmen >= 6) return;
+                if (sportsman == null) _sportsmen = new Sportsman[6]; 
                 _sportsmen[_added_sportsmen++] = sportsman;
             }
 
@@ -197,9 +199,12 @@ namespace Lab_7
                 double avg = 0; double n = 0; double s = 0;
                 foreach (Sportsman sportsman in Sportsmen)
                 {
-                    s += sportsman.Place;
-                    n++;
+                    if (sportsman != null && sportsman.Place != 0) {
+                        s += sportsman.Place;
+                        n++;
+                    }
                 }
+                if (n == 0) return 0;
                 avg = s / n;
                 return 100.0 / avg;
             }
@@ -214,12 +219,15 @@ namespace Lab_7
                 double s = 0; double n = 0; double p = 1;
                 foreach (Sportsman sportsman in Sportsmen)
                 {
-                    s += sportsman.Place;
-                    p *= sportsman.Place;
-                    n++;
+                    if (sportsman.Place != 0) {
+                        s += sportsman.Place;
+                        p *= sportsman.Place;
+                        n++;
+                    }  
                 }
-                double multiplier = s * n / p;
-                return 100.0;
+                if (p == 0) return 0;
+                double multiplier = (s * n) / p;
+                return 100.0 * multiplier;
             }
         }
     }

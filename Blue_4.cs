@@ -130,9 +130,18 @@ namespace Lab_7
             private void SortMaleOrFemale(Team[] t)
             {
                 if (t == null) { return; }
-                Team[] sorted_teams = null;
-                sorted_teams = t.OrderByDescending(team => team.TotalScore).ToArray();
-                t = sorted_teams;
+                for (int i = 1; i < t.Length; i++)
+                {
+                    Team curr_team = t[i];
+                    double curr_score = curr_team.TotalScore;
+                    int j = i - 1;
+                    while (j >= 0 && t[j].TotalScore < curr_score)
+                    {
+                        t[j + 1] = t[j];
+                        j--;
+                    }
+                    t[j + 1] = curr_team;
+                }
             }
 
             public void Sort()
@@ -144,7 +153,7 @@ namespace Lab_7
             private static void MergeBySex(Team[] group1, Team[] group2, Team[] group, int size)
             {
                 int i = 0, j = 0, k = 0;
-                while (i < group1.Length && j < group2.Length)
+                while (i < group1.Length && j < group2.Length && i < size && j < size)
                 {
                     if (group1[i].TotalScore >= group2[j].TotalScore)
                     {
@@ -156,11 +165,11 @@ namespace Lab_7
                     }
                 }
 
-                while (i < group1.Length)
+                while (i < group1.Length && i < size)
                 {
                     group[k++] = group1[i++];
                 }
-                while (j < group2.Length)
+                while (j < group2.Length && j < size)
                 {
                     group[k++] = group2[j++];
                 }
