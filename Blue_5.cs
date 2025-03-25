@@ -83,7 +83,7 @@ namespace Lab_7
                     int maxi = 18;
                     foreach (Sportsman sportsman in _sportsmen)
                     {
-                        if (sportsman.Place != 0)
+                        if (sportsman != null && sportsman.Place != 0)
                         {
                             maxi = Math.Min(maxi, sportsman.Place);
                         }

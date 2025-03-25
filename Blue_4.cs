@@ -179,8 +179,8 @@ namespace Lab_7
             public static Group Merge(Group group1, Group group2, int size)
             {
                 Group group = new Group("Финалисты");
-                MergeBySex(group1.ManTeams, group2.ManTeams, group.ManTeams, size);
-                MergeBySex(group1.WomanTeams, group2.WomanTeams, group.WomanTeams, size);
+                MergeBySex(group1.ManTeams, group2.ManTeams, group.ManTeams, size / 2);
+                MergeBySex(group1.WomanTeams, group2.WomanTeams, group.WomanTeams, size / 2);
                 return group;
             }
 

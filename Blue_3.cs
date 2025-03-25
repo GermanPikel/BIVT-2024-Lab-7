@@ -83,13 +83,32 @@ namespace Lab_7
 
         public class BasketballPlayer : Participant
         {
-            private double _mathches_with_5_fouls;
+
             public BasketballPlayer(string name, string surname) : base(name, surname)
             {
-                _mathches_with_5_fouls = 0;
+
             }
 
-            public override bool IsExpelled => _is_expelled;
+            //public override bool IsExpelled => _is_expelled;
+
+            public override bool IsExpelled {
+                get { 
+                    if (_penalties == null) { return false; }
+
+                    int mathches_with_5_fouls = 0;
+                    for (int i = 0; i < _penalties.Length; i++) { 
+                        if (_penalties[i] == 5) mathches_with_5_fouls++;
+                    }
+
+                    if (((mathches_with_5_fouls / _penalties.Length) > 0.1) || ((Total / 2.0) > _penalties.Length)) {
+                        _is_expelled = true;
+                        return true;
+                    }
+
+                    _is_expelled = false;
+                    return false;
+                }
+            }
 
             public override void PlayMatch(int fouls)
             {
@@ -99,8 +118,6 @@ namespace Lab_7
                     if (_penalties == null) return;
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = fouls;
-                    if (fouls == 5) { _mathches_with_5_fouls++; }
-                    if (((_mathches_with_5_fouls / _penalties.Length) > 0.1) || ((Total / 2.0) > _penalties.Length)) { _is_expelled = true; }
                 }
             }
         }
@@ -115,7 +132,23 @@ namespace Lab_7
                 _totalPlayers++;
             }
 
-            public override bool IsExpelled => _is_expelled;
+            // public override bool IsExpelled => _is_expelled;
+
+            public override bool IsExpelled { 
+                get {
+                    if (_penalties == null) { return false; }
+
+                    for (int i = 0; i < _penalties.Length; i++) {
+                        if (_penalties[i] >= 10) { _is_expelled = true; return true; }
+                    }
+
+                    if (_totalPlayers == 0) { _is_expelled = false; return false; }
+
+                    if ((Total / (_allPlayersPenalties / _totalPlayers)) > 0.1) { _is_expelled = true; return true; }
+
+                    return false;
+                }
+            }
 
             public override void PlayMatch(int time)
             {
@@ -126,8 +159,6 @@ namespace Lab_7
                     Array.Resize(ref _penalties, _penalties.Length + 1);
                     _penalties[_penalties.Length - 1] = time;
                     _allPlayersPenalties += time;
-                    if (_totalPlayers == 0) _is_expelled = false;
-                    if (time >= 10 || (Total / (_allPlayersPenalties / _totalPlayers) > 0.1)) { _is_expelled = true; }
                 }
             }
 
