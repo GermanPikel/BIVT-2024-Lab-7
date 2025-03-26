@@ -100,7 +100,6 @@ namespace Lab_7
 
             public BasketballPlayer(string name, string surname) : base(name, surname)
             {
-
             }
 
             //public override bool IsExpelled => _is_expelled;
@@ -114,8 +113,7 @@ namespace Lab_7
                         if (_penalties[i] >= 5) mathches_with_5_fouls++;
                     }
 
-                    if (_penalties.Length == 0) return false;
-                    if (((mathches_with_5_fouls / _penalties.Length) > 0.1) || (Total > _penalties.Length * 2)) {
+                    if ((mathches_with_5_fouls > 0.1 * _penalties.Length) || (Total > _penalties.Length * 2)) {
                         _is_expelled = true;
                         return true;
                     }
