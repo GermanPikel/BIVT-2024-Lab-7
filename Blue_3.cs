@@ -45,14 +45,14 @@ namespace Lab_7
                     if (_penalties == null || _penalties.Length == 0) { return false; }
                     foreach (int p in _penalties)
                     {
-                        if (p >= 10)
+                        if (p == 10)
                         {
                             return true;
                         }
                     }
                     return false;
                 }
-            };
+            }
 
             public Participant(string name, string surname)
             {
@@ -111,10 +111,11 @@ namespace Lab_7
 
                     int mathches_with_5_fouls = 0;
                     for (int i = 0; i < _penalties.Length; i++) { 
-                        if (_penalties[i] == 5) mathches_with_5_fouls++;
+                        if (_penalties[i] >= 5) mathches_with_5_fouls++;
                     }
 
-                    if (((mathches_with_5_fouls / _penalties.Length) > 0.1) || ((Total / 2.0) > _penalties.Length)) {
+                    if (_penalties.Length == 0) return false;
+                    if (((mathches_with_5_fouls / _penalties.Length) > 0.1) || (Total > _penalties.Length * 2)) {
                         _is_expelled = true;
                         return true;
                     }
@@ -158,7 +159,7 @@ namespace Lab_7
 
                     if (_totalPlayers == 0 || _allPlayersPenalties == 0) { _is_expelled = false; return false; }
 
-                    if ((Total / (_allPlayersPenalties / _totalPlayers)) > 0.1) { _is_expelled = true; return true; }
+                    if (((double)Total / (_allPlayersPenalties / _totalPlayers)) > 0.1) { _is_expelled = true; return true; }
 
                     return false;
                 }
