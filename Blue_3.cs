@@ -38,7 +38,21 @@ namespace Lab_7
                 }
             }
 
-            public virtual bool IsExpelled => _is_expelled;
+            public virtual bool IsExpelled
+            {
+                get
+                {
+                    if (_penalties == null || _penalties.Length == 0) { return false; }
+                    foreach (int p in _penalties)
+                    {
+                        if (p >= 10)
+                        {
+                            return true;
+                        }
+                    }
+                    return false;
+                }
+            };
 
             public Participant(string name, string surname)
             {
@@ -142,7 +156,7 @@ namespace Lab_7
                         if (_penalties[i] >= 10) { _is_expelled = true; return true; }
                     }
 
-                    if (_totalPlayers == 0) { _is_expelled = false; return false; }
+                    if (_totalPlayers == 0 || _allPlayersPenalties == 0) { _is_expelled = false; return false; }
 
                     if ((Total / (_allPlayersPenalties / _totalPlayers)) > 0.1) { _is_expelled = true; return true; }
 
