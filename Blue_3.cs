@@ -140,10 +140,9 @@ namespace Lab_7
         public class HockeyPlayer : Participant
         {
             private static int _totalPlayers = 0;
-            private static double _allPlayersPenalties;
+            private static double _allPlayersPenalties = 0;
             public HockeyPlayer(string name, string surname) : base(name, surname)
             {
-                _allPlayersPenalties = 0;
                 _totalPlayers++;
             }
 
